@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BatchData — Sign In</title>
+  <title>PropData — Sign In</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css?v=2" />
 </head>
@@ -51,16 +51,16 @@
       <div style="display:flex; flex-direction:column; gap:var(--space-2);">
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <span style="font-size:12px; color:var(--color-neutral-600);">Regular user</span>
-          <button type="button" onclick="fillCredentials('user@batchdata.com','user123')"
+          <button type="button" onclick="fillCredentials('user@propdata.com','user123')"
             style="font-size:11px; color:var(--color-primary-500); background:none; border:none; cursor:pointer; font-family:inherit; font-weight:500;">
-            user@batchdata.com / user123
+            user@propdata.com / user123
           </button>
         </div>
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <span style="font-size:12px; color:var(--color-neutral-600);">Admin</span>
-          <button type="button" onclick="fillCredentials('admin@batchdata.com','admin123')"
+          <button type="button" onclick="fillCredentials('admin@propdata.com','admin123')"
             style="font-size:11px; color:var(--color-primary-500); background:none; border:none; cursor:pointer; font-family:inherit; font-weight:500;">
-            admin@batchdata.com / admin123
+            admin@propdata.com / admin123
           </button>
         </div>
       </div>
@@ -71,8 +71,8 @@
 
 <script>
 const CREDENTIALS = {
-  'user@batchdata.com':  { password: 'user123',  role: 'user',  name: 'Sarah Mitchell', initials: 'SM' },
-  'admin@batchdata.com': { password: 'admin123', role: 'admin', name: 'James Carter',   initials: 'JC' },
+  'user@propdata.com':  { password: 'user123',  role: 'user',  name: 'Sarah Mitchell', initials: 'SM' },
+  'admin@propdata.com': { password: 'admin123', role: 'admin', name: 'James Carter',   initials: 'JC' },
 };
 
 function handleLogin(e) {
