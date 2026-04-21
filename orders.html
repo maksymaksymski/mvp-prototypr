@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BatchData — My Lists</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css?v=2" />
+  <script src="js/auth.js"></script>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Job Status Banner (S-04) — shown after job submitted -->
+  <div class="job-status-banner" id="jobBanner">
+    <div class="job-banner__inner">
+      <div class="job-banner__left">
+        <svg class="job-banner__icon" id="bannerIcon" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+          <circle cx="9" cy="9" r="7.5" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M9 5.5v3.5l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span class="job-banner__text" id="bannerText">
+          <strong>Phoenix AZ Absentee Owners</strong> — processing your list&hellip;
+        </span>
+      </div>
+      <div class="job-banner__right">
+        <span id="bannerAction"></span>
+        <button class="job-banner__dismiss" id="bannerDismiss" onclick="dismissBanner()">Dismiss</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Nav -->
+  <nav class="top-nav">
+    <div class="top-nav__inner">
+      <div class="top-nav__left">
+        <div class="top-nav__brand">
+          <span class="top-nav__logo">Batch<em>Data</em></span>
+        </div>
+        <div class="top-nav__links">
+          <a href="orders.html" class="top-nav__link top-nav__link--active">My Lists</a>
+          <a href="settings-token.html" class="top-nav__link nav-admin-only">API Settings</a>
+          <a href="settings-users.html" class="top-nav__link nav-admin-only">Users</a>
+          <a href="settings-corporate.html" class="top-nav__link nav-admin-only">Corporate Settings</a>
+        </div>
+      </div>
+      <div class="top-nav__right">
+        <span class="top-nav__user-name">James Carter</span>
+        <a href="profile.html" class="top-nav__avatar" id="navAvatar" style="text-decoration:none;color:white;" title="Profile settings">JC</a>
+        <button class="top-nav__logout" onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Body -->
+  <div class="page-body">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <div>
+        <h1 class="page-header__title">My Lists</h1>
+        <p class="page-header__subtitle">All your downloaded property lists in one place</p>
+      </div>
+      <a href="index.html" class="btn btn-primary btn-md">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M8 3v10M3 8h10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        New List Pull
+      </a>
+    </div>
+
+    <!-- Orders Table -->
+    <div class="orders-wrap" id="ordersTable">
+      <table class="orders-table" aria-label="Order history">
+        <colgroup>
+          <col style="width:auto" />
+          <col style="width:110px" />
+          <col style="width:90px" />
+          <col style="width:90px" />
+          <col style="width:100px" />
+          <col style="width:130px" />
+          <col style="width:160px" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>List</th>
+            <th>Date</th>
+            <th>Records</th>
+            <th>Cost</th>
+            <th>Status</th>
+            <th>Tag</th>
+            <th style="text-align:right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- Row 1 — Processing (new, from sessionStorage) -->
+          <tr id="newOrderRow" style="display:none">
+            <td>
+              <div class="order-name">Phoenix AZ Absentee Owners</div>
+              <div class="order-meta">Phoenix, AZ · Single Family · 3+ Beds · $100k–$500k</div>
+            </td>
+            <td style="white-space:nowrap; color:var(--color-neutral-500)">Today</td>
+            <td><strong>7,651</strong></td>
+            <td>$918.12</td>
+            <td><span class="badge badge--processing" id="newOrderBadge">Processing</span></td>
+            <td><span class="order-tag">Q2 Campaign</span></td>
+            <td>
+              <div class="order-actions" style="justify-content:flex-end">
+                <button class="btn btn-outline btn-sm" disabled style="opacity:0.4; cursor:not-allowed">Export CSV</button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Row 2 -->
+          <tr>
+            <td>
+              <div class="order-name">Scottsdale High Equity Single Family</div>
+              <div class="order-meta">Scottsdale, AZ · Single Family · 50%+ Equity</div>
+            </td>
+            <td style="white-space:nowrap; color:var(--color-neutral-500)">Apr 14, 2026</td>
+            <td><strong>2,134</strong></td>
+            <td>$256.08</td>
+            <td><span class="badge badge--ready">Ready</span></td>
+            <td><span class="order-tag">Solar Q2</span></td>
+            <td>
+              <div class="order-actions" style="justify-content:flex-end">
+                <button class="btn btn-outline btn-sm" onclick="handleExport(this)">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2v8M5 7l3 3 3-3M3 12h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  Export CSV
+                </button>
+                <a href="order-detail.html" class="btn btn-ghost btn-sm">View</a>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Row 3 -->
+          <tr>
+            <td>
+              <div class="order-name">Mesa Active Listings</div>
+              <div class="order-meta">Mesa, AZ · All Types · Active on market</div>
+            </td>
+            <td style="white-space:nowrap; color:var(--color-neutral-500)">Apr 10, 2026</td>
+            <td><strong>3,284</strong></td>
+            <td>$394.08</td>
+            <td><span class="badge badge--ready">Ready</span></td>
+            <td><span class="order-tag">March Outreach</span></td>
+            <td>
+              <div class="order-actions" style="justify-content:flex-end">
+                <button class="btn btn-outline btn-sm" onclick="handleExport(this)">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2v8M5 7l3 3 3-3M3 12h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  Export CSV
+                </button>
+                <a href="order-detail.html" class="btn btn-ghost btn-sm">View</a>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Row 4 — Failed -->
+          <tr>
+            <td>
+              <div class="order-name">Tempe Multi-Family Investor Owned</div>
+              <div class="order-meta">Tempe, AZ · Multi-Family · Investor Owned</div>
+            </td>
+            <td style="white-space:nowrap; color:var(--color-neutral-500)">Apr 7, 2026</td>
+            <td><strong>892</strong></td>
+            <td>$107.04</td>
+            <td><span class="badge badge--failed">Failed</span></td>
+            <td><span class="order-tag">Test Run</span></td>
+            <td>
+              <div class="order-actions" style="justify-content:flex-end">
+                <button class="btn btn-outline btn-sm" onclick="window.location.href='index.html'">Retry</button>
+                <a href="order-detail.html" class="btn btn-ghost btn-sm">View</a>
+              </div>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Empty State (hidden by default, swap with ordersTable for demo) -->
+    <div class="orders-wrap" id="emptyState" style="display:none">
+      <div class="empty-state">
+        <svg class="empty-state__icon" viewBox="0 0 56 56" fill="none" aria-hidden="true">
+          <rect x="8" y="14" width="40" height="32" rx="4" stroke="currentColor" stroke-width="2"/>
+          <path d="M16 22h24M16 28h16M16 34h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <h2 class="empty-state__title">No lists yet</h2>
+        <p class="empty-state__text">Your downloaded property lists will appear here. Pull your first list to get started.</p>
+        <a href="index.html" class="btn btn-primary btn-md">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+          New List Pull
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Export success toast (simple inline) -->
+<div id="toast" style="
+  position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px);
+  background:var(--color-neutral-900); color:white; padding:12px 20px;
+  border-radius:var(--radius-lg); font-size:13px; font-weight:500;
+  box-shadow:var(--shadow-lg); transition:transform 300ms ease; z-index:600;
+  display:flex; align-items:center; gap:8px; white-space:nowrap;
+">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3L13 4.5" stroke="#10B981" stroke-width="2" stroke-linecap="round"/></svg>
+  <span id="toastMsg">CSV export started — check your email</span>
+</div>
+
+<div id="payToast" style="
+  position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px);
+  background:#065F46; color:white; padding:14px 22px;
+  border-radius:var(--radius-lg); font-size:13px; font-weight:500;
+  box-shadow:var(--shadow-lg); transition:transform 350ms ease; z-index:601;
+  display:flex; align-items:center; gap:10px; white-space:nowrap;
+">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+    <circle cx="9" cy="9" r="8.5" fill="#10B981"/>
+    <path d="M5.5 9.5l2.5 2.5L13 6" stroke="white" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  Payment successful — your list is being prepared
+</div>
+
+<script>
+initPage();
+
+// ── Job banner ──────────────────────────────────────────────────────────────
+const banner   = document.getElementById('jobBanner');
+const newRow   = document.getElementById('newOrderRow');
+const newBadge = document.getElementById('newOrderBadge');
+const bannerText   = document.getElementById('bannerText');
+const bannerIcon   = document.getElementById('bannerIcon');
+const bannerAction = document.getElementById('bannerAction');
+
+function dismissBanner() {
+  banner.classList.remove('job-status-banner--processing', 'job-status-banner--ready');
+  sessionStorage.removeItem('newJob');
+}
+
+function setReady() {
+  banner.className = 'job-status-banner job-status-banner--ready';
+  bannerIcon.style.color = 'var(--color-success-700)';
+  bannerText.innerHTML = '<strong>Phoenix AZ Absentee Owners</strong> — your list is ready to download.';
+  bannerAction.innerHTML = '<button class="btn btn-outline btn-sm" onclick="handleExport(this)" style="border-color:var(--color-success-700); color:var(--color-success-700)"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2v8M5 7l3 3 3-3M3 12h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Export CSV</button>';
+
+  if (newBadge) {
+    newBadge.className = 'badge badge--ready';
+    newBadge.textContent = 'Ready';
+  }
+  const exportBtn = newRow ? newRow.querySelector('button') : null;
+  if (exportBtn) { exportBtn.disabled = false; exportBtn.style.opacity = '1'; exportBtn.style.cursor = 'pointer'; }
+}
+
+if (sessionStorage.getItem('paymentSuccess') === '1') {
+  sessionStorage.removeItem('paymentSuccess');
+  const pt = document.getElementById('payToast');
+  setTimeout(() => {
+    pt.style.transform = 'translateX(-50%) translateY(0)';
+    setTimeout(() => { pt.style.transform = 'translateX(-50%) translateY(80px)'; }, 4000);
+  }, 300);
+}
+
+if (sessionStorage.getItem('newJob') === 'processing') {
+  newRow.style.display = '';
+  banner.className = 'job-status-banner job-status-banner--processing';
+  // Simulate job completing after 4 seconds
+  setTimeout(setReady, 4000);
+}
+
+// ── Export toast ─────────────────────────────────────────────────────────────
+function handleExport(btn) {
+  const toast = document.getElementById('toast');
+  toast.style.transform = 'translateX(-50%) translateY(0)';
+  setTimeout(() => { toast.style.transform = 'translateX(-50%) translateY(80px)'; }, 3000);
+}
+</script>
+
+</body>
+</html>

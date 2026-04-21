@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BatchData — Sign In</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css?v=2" />
+</head>
+<body>
+
+<div class="login-page">
+  <div class="login-card">
+
+    <div class="login-brand">
+      <div class="login-brand__logo">Batch<em>Data</em></div>
+      <p class="login-brand__tagline">List Builder — Self-Service Data Platform</p>
+    </div>
+
+    <form class="login-form" onsubmit="handleLogin(event)">
+
+      <div class="login-form__group">
+        <label class="form-label" for="email">Work email</label>
+        <input type="email" id="email" class="input input-filled"
+          placeholder="you@company.com" autocomplete="email" required />
+      </div>
+
+      <div class="login-form__group">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <label class="form-label" for="password" style="margin-bottom:0">Password</label>
+          <a href="#" style="font-size:12px; color:var(--color-primary-500)">Forgot password?</a>
+        </div>
+        <input type="password" id="password" class="input input-filled"
+          placeholder="••••••••" autocomplete="current-password" required />
+      </div>
+
+      <div id="loginError" class="alert alert--error" style="display:none">
+        <svg class="alert__icon" viewBox="0 0 18 18" fill="none"><path d="M9 3L2 15h14L9 3z" stroke="currentColor" stroke-width="1.5"/><path d="M9 8v3M9 13v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span>Incorrect email or password.</span>
+      </div>
+
+      <button class="btn btn-primary btn-md" type="submit" style="width:100%; margin-top:4px;">
+        Sign in
+      </button>
+
+    </form>
+
+    <!-- Demo credentials hint -->
+    <div style="margin-top:var(--space-6); padding:var(--space-4); background:var(--color-neutral-50); border:1px solid var(--color-neutral-200); border-radius:var(--radius-lg);">
+      <p style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--color-neutral-400); margin-bottom:var(--space-3);">Demo credentials</p>
+      <div style="display:flex; flex-direction:column; gap:var(--space-2);">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:12px; color:var(--color-neutral-600);">Regular user</span>
+          <button type="button" onclick="fillCredentials('user@batchdata.com','user123')"
+            style="font-size:11px; color:var(--color-primary-500); background:none; border:none; cursor:pointer; font-family:inherit; font-weight:500;">
+            user@batchdata.com / user123
+          </button>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:12px; color:var(--color-neutral-600);">Admin</span>
+          <button type="button" onclick="fillCredentials('admin@batchdata.com','admin123')"
+            style="font-size:11px; color:var(--color-primary-500); background:none; border:none; cursor:pointer; font-family:inherit; font-weight:500;">
+            admin@batchdata.com / admin123
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const CREDENTIALS = {
+  'user@batchdata.com':  { password: 'user123',  role: 'user',  name: 'Sarah Mitchell', initials: 'SM' },
+  'admin@batchdata.com': { password: 'admin123', role: 'admin', name: 'James Carter',   initials: 'JC' },
+};
+
+function handleLogin(e) {
+  e.preventDefault();
+  const email    = document.getElementById('email').value.trim().toLowerCase();
+  const password = document.getElementById('password').value;
+  const user     = CREDENTIALS[email];
+
+  if (user && user.password === password) {
+    sessionStorage.setItem('role',     user.role);
+    sessionStorage.setItem('userName', user.name);
+    sessionStorage.setItem('userInitials', user.initials);
+    window.location.href = 'orders.html';
+  } else {
+    document.getElementById('loginError').style.display = 'flex';
+  }
+}
+
+function fillCredentials(email, password) {
+  document.getElementById('email').value    = email;
+  document.getElementById('password').value = password;
+  document.getElementById('loginError').style.display = 'none';
+}
+</script>
+
+</body>
+</html>

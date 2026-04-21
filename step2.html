@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BatchData List Builder — Step 2</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css?v=2" />
+  <script src="js/auth.js"></script>
+</head>
+<body>
+
+<div class="app">
+
+  <div class="job-status-banner"></div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="app-header__inner">
+      <!-- Stepper — DS 22 -->
+      <nav class="stepper" aria-label="Progress">
+        <div class="stepper-step stepper-step--inactive">
+          <span class="stepper-number">1</span>
+          <span class="stepper-label">Define Your Pull</span>
+        </div>
+        <div class="stepper-connector" aria-hidden="true"></div>
+        <div class="stepper-step stepper-step--active" aria-current="step">
+          <span class="stepper-number">2</span>
+          <span class="stepper-label">Review &amp; Download</span>
+        </div>
+      </nav>
+
+      <!-- Close overlay -->
+      <a href="orders.html" class="overlay-close" aria-label="Close and return to My Lists">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="step2-main">
+
+    <!-- Sub header -->
+    <div class="sub-header">
+      <div class="sub-header-left">
+        <a href="index.html" class="btn btn-outline btn-sm">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Edit Filters
+        </a>
+        <div class="sub-header-title">
+          <h2>Review Your List</h2>
+          <p>Review record count, apply suppression, and download</p>
+        </div>
+      </div>
+
+      <!-- Suppress Records button with active indicator -->
+      <div class="suppress-btn-wrap">
+        <button class="btn btn-outline btn-sm" type="button" id="suppressBtn" onclick="openDrawer()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M2 4h12M4 8h8M7 12h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          Suppress Records
+        </button>
+        <span class="suppress-active-dot" id="suppressDot"></span>
+      </div>
+    </div>
+
+    <!-- Count Bar — DS 27 -->
+    <div class="count-bar">
+      <div class="count-bar__stats">
+
+        <div class="count-bar__stat">
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M4 6h12M4 10h8M4 14h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span><strong id="recordCount">7,651</strong> records found</span>
+        </div>
+
+        <div class="count-bar__divider" aria-hidden="true"></div>
+
+        <div class="count-bar__stat">
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M10 6v1.5M10 12.5V14M7.5 8.5c0-1.1.9-2 2.5-2s2.5.9 2.5 2-1.12 2-2.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span>Estimated cost: <strong id="costEstimate">$918.12</strong></span>
+        </div>
+
+        <!-- Suppression badge — shown when active -->
+        <div class="count-bar__divider" id="suppressDivider" aria-hidden="true" style="display:none"></div>
+        <div class="count-bar__stat" id="suppressStat" style="display:none">
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M7 10h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span style="color:var(--color-primary-600)"><strong id="suppressedCount">0</strong> suppressed</span>
+        </div>
+
+      </div>
+
+      <button class="btn btn-primary btn-md" type="button" id="downloadBtn" onclick="openPayment()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M8 2v8M5 7l3 3 3-3M3 12h10" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Download List
+      </button>
+    </div>
+
+    <!-- Data Preview — DS 28 -->
+    <div class="data-preview">
+
+      <div class="data-preview__header">
+        <div class="data-preview__title">
+          <h3>Results Preview</h3>
+          <p>Sample of properties matching your criteria</p>
+        </div>
+        <div class="data-preview__count">
+          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M8 2C5.79 2 4 3.79 4 6c0 2.97 4 8 4 8s4-5.03 4-8c0-2.21-1.79-4-4-4zm0 5.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/>
+          </svg>
+          Showing 3 of 7,651
+        </div>
+      </div>
+
+      <div class="results-table-wrapper">
+        <table class="results-table" aria-label="Property results preview">
+          <thead>
+            <tr>
+              <th>Address</th>
+              <th>City</th>
+              <th>State</th>
+              <th>ZIP</th>
+              <th>Type</th>
+              <th>Beds</th>
+              <th>Baths</th>
+              <th>Sqft</th>
+              <th>Year Built</th>
+              <th>Est. Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-address">1234 Main St</td>
+              <td>Phoenix</td><td>AZ</td><td>85001</td><td>Single Family</td>
+              <td>3</td><td>2</td><td>1,850</td><td>2015</td><td>$425,000</td>
+            </tr>
+            <tr>
+              <td class="col-address">5678 Oak Ave</td>
+              <td>Phoenix</td><td>AZ</td><td>85002</td><td>Single Family</td>
+              <td>4</td><td>3</td><td>2,200</td><td>2018</td><td>$565,000</td>
+            </tr>
+            <tr>
+              <td class="col-address">9012 Pine Rd</td>
+              <td>Scottsdale</td><td>AZ</td><td>85251</td><td>Condo</td>
+              <td>2</td><td>2</td><td>1,200</td><td>2020</td><td>$385,000</td>
+            </tr>
+            <tr class="row-blurred" aria-hidden="true">
+              <td class="col-address">3456 Elm St</td>
+              <td>Tempe</td><td>AZ</td><td>85281</td><td>Single Family</td>
+              <td>3</td><td>2.5</td><td>1,950</td><td>2016</td><td>$475,000</td>
+            </tr>
+            <tr class="row-blurred" aria-hidden="true">
+              <td class="col-address">7890 Maple Dr</td>
+              <td>Phoenix</td><td>AZ</td><td>85003</td><td>Multi-Family</td>
+              <td>6</td><td>4</td><td>3,200</td><td>2012</td><td>$725,000</td>
+            </tr>
+            <tr class="row-blurred" aria-hidden="true">
+              <td class="col-address">2345 Cedar Ln</td>
+              <td>Mesa</td><td>AZ</td><td>85201</td><td>Single Family</td>
+              <td>4</td><td>2</td><td>2,100</td><td>2014</td><td>$495,000</td>
+            </tr>
+            <tr class="row-blurred" aria-hidden="true">
+              <td class="col-address">6789 Birch Way</td>
+              <td>Phoenix</td><td>AZ</td><td>85004</td><td>Condo</td>
+              <td>2</td><td>1</td><td>980</td><td>2019</td><td>$295,000</td>
+            </tr>
+            <tr class="row-blurred" aria-hidden="true">
+              <td class="col-address">1357 Spruce Ct</td>
+              <td>Chandler</td><td>AZ</td><td>85224</td><td>Single Family</td>
+              <td>5</td><td>3</td><td>2,800</td><td>2017</td><td>$645,000</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Paywall overlay — DS 28 -->
+        <div class="paywall-overlay" role="dialog" aria-modal="true" aria-labelledby="unlockTitle">
+          <div class="paywall-modal">
+
+            <svg class="paywall-modal__icon" width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+              <rect x="10" y="22" width="28" height="20" rx="3" stroke="currentColor" stroke-width="2.5"/>
+              <path d="M16 22V16a8 8 0 1116 0v6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="24" cy="32" r="2.5" fill="currentColor"/>
+            </svg>
+
+            <h4 id="unlockTitle">Unlock Full Results</h4>
+            <p>Purchase this list to access all <strong id="paywallCount">7,651</strong> property records with complete details</p>
+
+            <button class="btn btn-primary btn-md" type="button" onclick="openPayment()">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M8 2v8M5 7l3 3 3-3M3 12h10" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Download List — <span id="paywallCost">$918.12</span>
+            </button>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ===================================================
+     SUPPRESSION DRAWER (S-07)
+     =================================================== -->
+<!-- Payment Modal -->
+<div class="modal-backdrop" id="payModal">
+  <div class="modal modal--sm">
+
+    <div class="modal__header">
+      <div>
+        <h3 class="modal__title">Complete Payment</h3>
+        <p class="modal__subtitle">Your list will start processing after payment.</p>
+      </div>
+      <button class="modal__close" onclick="closePayment()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <div class="modal__body">
+
+      <!-- Order summary -->
+      <div style="background:var(--color-neutral-50); border:1px solid var(--color-neutral-200); border-radius:var(--radius-lg); padding:12px 16px; display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <div style="font-size:13px; font-weight:600; color:var(--color-neutral-800);">Phoenix AZ Absentee Owners</div>
+          <div style="font-size:12px; color:var(--color-neutral-500); margin-top:2px;"><span id="payRecordCount">7,651</span> records · $0.12 per record</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:18px; font-weight:700; color:var(--color-neutral-900);" id="paySummaryCost">$918.12</div>
+          <div style="font-size:11px; color:var(--color-neutral-400);"><span id="paySummaryCount">7,651</span> records</div>
+        </div>
+      </div>
+
+      <!-- Card fields -->
+      <div style="display:flex; flex-direction:column; gap:12px; margin-top:4px;">
+        <div>
+          <label class="form-label" for="payCard">Card number</label>
+          <input id="payCard" type="text" class="input input-filled" placeholder="1234 5678 9012 3456" maxlength="19" inputmode="numeric" oninput="formatCardInput(this)" />
+        </div>
+        <div style="display:flex; gap:12px;">
+          <div style="flex:1;">
+            <label class="form-label" for="payExpiry">Expiry</label>
+            <input id="payExpiry" type="text" class="input input-filled" placeholder="MM/YY" maxlength="5" inputmode="numeric" oninput="formatExpiryInput(this)" />
+          </div>
+          <div style="flex:1;">
+            <label class="form-label" for="payCvv">CVV</label>
+            <input id="payCvv" type="text" class="input input-filled" placeholder="123" maxlength="4" inputmode="numeric" oninput="this.value=this.value.replace(/\D/g,'').slice(0,4)" />
+          </div>
+        </div>
+        <div>
+          <label class="form-label" for="payName">Cardholder name</label>
+          <input id="payName" type="text" class="input input-filled" placeholder="James Carter" />
+        </div>
+      </div>
+
+      <!-- Save card -->
+      <label style="display:flex; align-items:center; gap:10px; cursor:pointer; margin-top:4px;">
+        <input type="checkbox" id="saveCard" checked style="width:16px; height:16px; accent-color:var(--color-primary-500); cursor:pointer; flex-shrink:0;" />
+        <span style="font-size:13px; color:var(--color-neutral-700);">Save this card for future purchases</span>
+      </label>
+
+      <!-- Error -->
+      <div id="payError" class="alert alert--error" style="display:none; margin-top:4px;">
+        <svg class="alert__icon" viewBox="0 0 18 18" fill="none"><path d="M9 3L2 15h14L9 3z" stroke="currentColor" stroke-width="1.5"/><path d="M9 8v3M9 13v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span>Please fill in all card details.</span>
+      </div>
+
+    </div>
+
+    <div class="modal__footer">
+      <button class="btn btn-outline btn-md" onclick="closePayment()">Cancel</button>
+      <button class="btn btn-primary btn-md" id="payBtn" onclick="submitPayment()" style="min-width:140px; position:relative;">
+        <svg id="paySpinner" width="16" height="16" viewBox="0 0 16 16" fill="none" style="display:none; animation:spin 0.7s linear infinite; position:absolute; left:50%; margin-left:-8px;">
+          <circle cx="8" cy="8" r="6" stroke="rgba(255,255,255,0.35)" stroke-width="2"/>
+          <path d="M8 2a6 6 0 0 1 6 6" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span id="payBtnLabel">Pay $918.12</span>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<style>@keyframes spin { to { transform: rotate(360deg); } }</style>
+
+
+<div class="drawer-backdrop" id="drawerBackdrop" onclick="closeDrawer()"></div>
+
+<aside class="drawer" id="suppressDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+
+  <div class="drawer__header">
+    <h3 class="drawer__title" id="drawerTitle">Suppress Records</h3>
+    <button class="drawer__close" onclick="closeDrawer()" aria-label="Close suppression panel">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+
+  <div class="drawer__tabs">
+    <button class="drawer__tab drawer__tab--active" id="tabOrders" onclick="switchTab('orders')">From Past Lists</button>
+    <button class="drawer__tab" id="tabCsv" onclick="switchTab('csv')">Import CSV</button>
+  </div>
+
+  <div class="drawer__body">
+
+    <!-- Tab: Past Orders -->
+    <div class="tab-panel tab-panel--active" id="panelOrders">
+      <p style="font-size:13px; color:var(--color-neutral-500); margin-bottom:12px;">
+        Select past lists to exclude those contacts from this pull.
+      </p>
+
+      <!-- Filters -->
+      <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:12px; padding:12px; background:var(--color-neutral-50); border:1px solid var(--color-neutral-200); border-radius:var(--radius-lg);">
+        <div>
+          <label style="font-size:11px; font-weight:600; color:var(--color-neutral-500); text-transform:uppercase; letter-spacing:0.05em; display:block; margin-bottom:4px;">Tag</label>
+          <select id="filterTag" class="input input-filled" style="font-size:13px; height:34px; padding:0 10px;" onchange="applyDrawerFilters()">
+            <option value="">All tags</option>
+            <option value="Solar Q2">Solar Q2</option>
+            <option value="March Outreach">March Outreach</option>
+            <option value="Test Run">Test Run</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:11px; font-weight:600; color:var(--color-neutral-500); text-transform:uppercase; letter-spacing:0.05em; display:block; margin-bottom:4px;">Date range</label>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <input type="date" id="filterDateFrom" class="input input-filled" style="font-size:13px; height:34px; padding:0 8px; flex:1;" onchange="applyDrawerFilters()" />
+            <span style="font-size:12px; color:var(--color-neutral-400);">–</span>
+            <input type="date" id="filterDateTo" class="input input-filled" style="font-size:13px; height:34px; padding:0 8px; flex:1;" onchange="applyDrawerFilters()" />
+          </div>
+        </div>
+        <button type="button" onclick="clearDrawerFilters()" style="font-size:12px; color:var(--color-neutral-400); background:none; border:none; cursor:pointer; text-align:left; padding:0; font-family:inherit;">Clear filters</button>
+      </div>
+
+      <div class="suppress-order-list" id="suppressList">
+
+        <label class="suppress-order-item" id="sItem1" data-tag="Solar Q2" data-date="2026-04-14">
+          <input type="checkbox" onchange="toggleSuppression(this, 2134, 'sItem1')" />
+          <div class="suppress-order-info">
+            <div class="suppress-order-name">Scottsdale High Equity Single Family</div>
+            <div class="suppress-order-meta">Apr 14, 2026 · 2,134 records · <span class="order-tag" style="font-size:10px">Solar Q2</span></div>
+          </div>
+          <span class="badge badge--ready" style="margin-left:auto; flex-shrink:0">Ready</span>
+        </label>
+
+        <label class="suppress-order-item" id="sItem2" data-tag="March Outreach" data-date="2026-04-10">
+          <input type="checkbox" onchange="toggleSuppression(this, 3284, 'sItem2')" />
+          <div class="suppress-order-info">
+            <div class="suppress-order-name">Mesa Active Listings</div>
+            <div class="suppress-order-meta">Apr 10, 2026 · 3,284 records · <span class="order-tag" style="font-size:10px">March Outreach</span></div>
+          </div>
+          <span class="badge badge--ready" style="margin-left:auto; flex-shrink:0">Ready</span>
+        </label>
+
+        <label class="suppress-order-item" id="sItem3" data-tag="Test Run" data-date="2026-04-07" style="opacity:0.5; cursor:not-allowed; pointer-events:none">
+          <input type="checkbox" disabled />
+          <div class="suppress-order-info">
+            <div class="suppress-order-name">Tempe Multi-Family Investor Owned</div>
+            <div class="suppress-order-meta">Apr 7, 2026 · 892 records · <span class="order-tag" style="font-size:10px">Test Run</span></div>
+          </div>
+          <span class="badge badge--failed" style="margin-left:auto; flex-shrink:0">Failed</span>
+        </label>
+
+        <div id="suppressEmpty" style="display:none; padding:20px 0; text-align:center; font-size:13px; color:var(--color-neutral-400);">No lists match these filters</div>
+
+      </div>
+    </div>
+
+    <!-- Tab: Import CSV -->
+    <div class="tab-panel" id="panelCsv">
+      <p style="font-size:13px; color:var(--color-neutral-500); margin-bottom:12px;">
+        Upload a CSV of contacts to exclude. Must contain a <code style="background:var(--color-neutral-100); padding:1px 5px; border-radius:4px; font-size:12px">phone</code> or <code style="background:var(--color-neutral-100); padding:1px 5px; border-radius:4px; font-size:12px">email</code> column.
+      </p>
+      <div class="file-upload" onclick="simulateCsvUpload()" id="fileUploadArea">
+        <svg class="file-upload__icon" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+          <path d="M18 24V12M12 18l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M6 28h24" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <p class="file-upload__label"><span>Click to upload</span> or drag and drop</p>
+        <p class="file-upload__hint">CSV up to 500MB · Max 1M rows</p>
+      </div>
+      <div id="csvUploaded" style="display:none">
+        <div class="alert alert--success">
+          <svg class="alert__icon" viewBox="0 0 18 18" fill="none"><path d="M3 9.5l3.5 3.5L15 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+          <span><strong>suppression_list.csv</strong> uploaded — 1,247 records will be excluded.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="drawer__footer">
+    <span class="drawer__footer-hint" id="suppressHint">No suppression applied</span>
+    <div style="display:flex; gap:8px">
+      <button class="btn btn-outline btn-sm" onclick="clearSuppression()">Clear</button>
+      <button class="btn btn-primary btn-sm" onclick="applyAndClose()">Apply</button>
+    </div>
+  </div>
+
+</aside>
+
+<script>
+// ── Suppression state ─────────────────────────────────────────────────────
+let suppressedRecords = 0;
+const BASE_RECORDS = 7651;
+const PRICE_PER_RECORD = 0.12;
+
+function formatNum(n) { return n.toLocaleString('en-US'); }
+function formatCost(n) { return '$' + (n * PRICE_PER_RECORD).toFixed(2); }
+
+function updateCountBar() {
+  const net = Math.max(0, BASE_RECORDS - suppressedRecords);
+  document.getElementById('recordCount').textContent  = formatNum(net);
+  document.getElementById('costEstimate').textContent = formatCost(net);
+  document.getElementById('paywallCount').textContent = formatNum(net);
+  document.getElementById('paywallCost').textContent  = formatCost(net);
+
+  const hasSuppression = suppressedRecords > 0;
+  document.getElementById('suppressDivider').style.display = hasSuppression ? '' : 'none';
+  document.getElementById('suppressStat').style.display    = hasSuppression ? '' : 'none';
+  document.getElementById('suppressedCount').textContent   = formatNum(suppressedRecords);
+  document.getElementById('suppressDot').classList.toggle('suppress-active-dot--visible', hasSuppression);
+
+  document.getElementById('suppressHint').innerHTML = hasSuppression
+    ? '<span class="suppression-count">' + formatNum(suppressedRecords) + ' records</span> will be suppressed'
+    : 'No suppression applied';
+}
+
+function toggleSuppression(cb, count, itemId) {
+  document.getElementById(itemId).classList.toggle('suppress-order-item--selected', cb.checked);
+  suppressedRecords += cb.checked ? count : -count;
+  suppressedRecords = Math.max(0, suppressedRecords);
+  updateCountBar();
+}
+
+function simulateCsvUpload() {
+  document.getElementById('fileUploadArea').style.display = 'none';
+  document.getElementById('csvUploaded').style.display = '';
+  suppressedRecords += 1247;
+  updateCountBar();
+}
+
+function clearSuppression() {
+  suppressedRecords = 0;
+  document.querySelectorAll('.suppress-order-item input[type="checkbox"]').forEach(cb => { cb.checked = false; });
+  document.querySelectorAll('.suppress-order-item').forEach(el => el.classList.remove('suppress-order-item--selected'));
+  document.getElementById('fileUploadArea').style.display = '';
+  document.getElementById('csvUploaded').style.display = 'none';
+  updateCountBar();
+}
+
+// ── Drawer open / close ───────────────────────────────────────────────────
+function openDrawer() {
+  document.getElementById('drawerBackdrop').classList.add('drawer-backdrop--open');
+  document.getElementById('suppressDrawer').classList.add('drawer--open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDrawer() {
+  document.getElementById('drawerBackdrop').classList.remove('drawer-backdrop--open');
+  document.getElementById('suppressDrawer').classList.remove('drawer--open');
+  document.body.style.overflow = '';
+}
+
+function applyAndClose() { closeDrawer(); }
+
+// ── Drawer filters ────────────────────────────────────────────────────────
+function applyDrawerFilters() {
+  const tag      = document.getElementById('filterTag').value;
+  const dateFrom = document.getElementById('filterDateFrom').value;
+  const dateTo   = document.getElementById('filterDateTo').value;
+  const items    = document.querySelectorAll('.suppress-order-item[data-date]');
+  let visible    = 0;
+
+  items.forEach(item => {
+    const itemTag  = item.dataset.tag;
+    const itemDate = item.dataset.date;
+    const tagMatch  = !tag      || itemTag  === tag;
+    const fromMatch = !dateFrom || itemDate >= dateFrom;
+    const toMatch   = !dateTo   || itemDate <= dateTo;
+    const show = tagMatch && fromMatch && toMatch;
+    item.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+
+  document.getElementById('suppressEmpty').style.display = visible === 0 ? '' : 'none';
+
+  const hasFilter = tag || dateFrom || dateTo;
+  const btn = document.getElementById('suppressBtn');
+  btn.classList.toggle('btn-primary', !!hasFilter);
+  btn.classList.toggle('btn-outline', !hasFilter);
+}
+
+function clearDrawerFilters() {
+  document.getElementById('filterTag').value      = '';
+  document.getElementById('filterDateFrom').value = '';
+  document.getElementById('filterDateTo').value   = '';
+  applyDrawerFilters();
+}
+
+// ── Tab switching ─────────────────────────────────────────────────────────
+function switchTab(tab) {
+  const isOrders = tab === 'orders';
+  document.getElementById('tabOrders').classList.toggle('drawer__tab--active', isOrders);
+  document.getElementById('tabCsv').classList.toggle('drawer__tab--active', !isOrders);
+  document.getElementById('panelOrders').classList.toggle('tab-panel--active', isOrders);
+  document.getElementById('panelCsv').classList.toggle('tab-panel--active', !isOrders);
+}
+
+// ── Payment modal ─────────────────────────────────────────────────────────
+function openPayment() {
+  const net  = Math.max(0, BASE_RECORDS - suppressedRecords);
+  const cost = (net * PRICE_PER_RECORD).toFixed(2);
+  document.getElementById('payRecordCount').textContent = formatNum(net);
+  document.getElementById('paySummaryCount').textContent = formatNum(net);
+  document.getElementById('paySummaryCost').textContent  = '$' + cost;
+  document.getElementById('payBtnLabel').textContent     = 'Pay $' + cost;
+  document.getElementById('payModal').classList.add('modal-backdrop--open');
+  resetPayForm();
+}
+function closePayment() {
+  document.getElementById('payModal').classList.remove('modal-backdrop--open');
+}
+function resetPayForm() {
+  document.getElementById('payCard').value   = '4242 4242 4242 4242';
+  document.getElementById('payExpiry').value = '09/27';
+  document.getElementById('payCvv').value    = '424';
+  document.getElementById('payName').value   = 'James Carter';
+  document.getElementById('saveCard').checked = true;
+  setPayState('idle');
+}
+function setPayState(state) {
+  const btn   = document.getElementById('payBtn');
+  const label = document.getElementById('payBtnLabel');
+  const spin  = document.getElementById('paySpinner');
+  if (state === 'loading') {
+    btn.disabled  = true;
+    spin.style.display  = '';
+    label.style.display = 'none';
+  } else {
+    btn.disabled  = false;
+    spin.style.display  = 'none';
+    label.style.display = '';
+  }
+}
+function submitPayment() {
+  const card = document.getElementById('payCard').value.replace(/\s/g,'');
+  const exp  = document.getElementById('payExpiry').value;
+  const cvv  = document.getElementById('payCvv').value;
+  const name = document.getElementById('payName').value;
+  if (card.length < 16 || !exp || cvv.length < 3 || !name) {
+    document.getElementById('payError').style.display = 'flex';
+    return;
+  }
+  document.getElementById('payError').style.display = 'none';
+  setPayState('loading');
+  setTimeout(() => {
+    closePayment();
+    submitJob();
+  }, 2000);
+}
+// card number formatting
+function formatCardInput(el) {
+  let v = el.value.replace(/\D/g,'').slice(0,16);
+  el.value = v.match(/.{1,4}/g)?.join(' ') || v;
+}
+function formatExpiryInput(el) {
+  let v = el.value.replace(/\D/g,'').slice(0,4);
+  if (v.length > 2) v = v.slice(0,2) + '/' + v.slice(2);
+  el.value = v;
+}
+
+// ── Submit job → go to orders with banner ─────────────────────────────────
+initPage();
+function submitJob() {
+  sessionStorage.setItem('newJob', 'processing');
+  sessionStorage.setItem('paymentSuccess', '1');
+  window.location.href = 'orders.html';
+}
+</script>
+
+</body>
+</html>

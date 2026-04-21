@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BatchData List Builder — Step 1</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css?v=2" />
+  <script src="js/auth.js"></script>
+</head>
+<body>
+
+<div class="app">
+
+  <div class="job-status-banner"></div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="app-header__inner">
+      <!-- Stepper — DS 22 -->
+      <nav class="stepper" aria-label="Progress">
+        <div class="stepper-step stepper-step--active" aria-current="step">
+          <span class="stepper-number">1</span>
+          <span class="stepper-label">Define Your Pull</span>
+        </div>
+        <div class="stepper-connector" aria-hidden="true"></div>
+        <div class="stepper-step stepper-step--inactive">
+          <span class="stepper-number">2</span>
+          <span class="stepper-label">Review &amp; Download</span>
+        </div>
+      </nav>
+
+      <!-- Close overlay -->
+      <a href="orders.html" class="overlay-close" aria-label="Close and return to My Lists">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="app-main">
+
+    <!-- QuickList Templates — DS 23 -->
+    <section class="quicklist-templates">
+      <div class="section-header">
+        <h2>QuickList Templates</h2>
+        <p>Start with a pre-configured template</p>
+      </div>
+
+      <div class="template-card-grid">
+
+        <button class="template-card" data-template="active-listings" type="button">
+          <span class="template-card__check" aria-hidden="true">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3.5" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="template-card__title">Active Listings</span>
+          <span class="template-card__desc">Properties currently on the market</span>
+          <span class="template-card__meta">~3,284 records</span>
+        </button>
+
+        <button class="template-card" data-template="failed-listings" type="button">
+          <span class="template-card__check" aria-hidden="true">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3.5" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="template-card__title">Failed Listings</span>
+          <span class="template-card__desc">Properties that expired or were withdrawn</span>
+          <span class="template-card__meta">~892 records</span>
+        </button>
+
+        <button class="template-card" data-template="absentee-owners" type="button">
+          <span class="template-card__check" aria-hidden="true">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3.5" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="template-card__title">Absentee Owners</span>
+          <span class="template-card__desc">Owners who don't live at the property</span>
+          <span class="template-card__meta">~7,651 records</span>
+        </button>
+
+        <button class="template-card" data-template="high-equity" type="button">
+          <span class="template-card__check" aria-hidden="true">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3.5" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="template-card__title">High Equity</span>
+          <span class="template-card__desc">Properties with significant equity</span>
+          <span class="template-card__meta">~2,134 records</span>
+        </button>
+
+      </div>
+    </section>
+
+    <!-- Filter Panel — DS 24 -->
+    <section class="filter-panel">
+      <div class="filter-panel__header">
+        <h3>Custom Filters</h3>
+        <p>Refine your list criteria</p>
+      </div>
+
+      <div class="filter-panel__body">
+
+        <!-- Location -->
+        <div class="filter-group">
+          <span class="filter-label">Location</span>
+          <div class="input-wrap">
+            <svg class="input-icon-left" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M13.5 13.5L17 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <input
+              type="text"
+              class="input input-filled input-lg input-with-icon-left"
+              placeholder="Enter zip code, county, state, or address..."
+              autocomplete="off"
+            />
+          </div>
+        </div>
+
+        <!-- Property Type + Bedrooms -->
+        <div class="filter-row">
+
+          <div class="filter-group">
+            <span class="filter-label">Property Type</span>
+            <div class="checkbox-group">
+              <label class="checkbox-item">
+                <input type="checkbox" name="property-type" value="single-family" />
+                Single Family
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="property-type" value="multi-family" />
+                Multi-Family
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="property-type" value="condo-townhouse" />
+                Condo/Townhouse
+              </label>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <span class="filter-label">Bedrooms</span>
+            <select class="input select input-filled placeholder" name="bedrooms">
+              <option value="any">Any</option>
+              <option value="1">1+</option>
+              <option value="2">2+</option>
+              <option value="3">3+</option>
+              <option value="4">4+</option>
+              <option value="5">5+</option>
+            </select>
+          </div>
+
+        </div>
+
+        <!-- Price Range + Minimum Equity — DS 25 -->
+        <div class="filter-row">
+
+          <div class="filter-group">
+            <span class="filter-label" id="rangeLabel">Price Range: $100,000 – $500,000</span>
+            <div class="range-dual">
+              <div class="range-dual__track"></div>
+              <div class="range-dual__fill" id="rangeFill"></div>
+              <input type="range" class="range-dual__input" id="rangeMin" min="0" max="1000000" value="100000" step="10000" />
+              <input type="range" class="range-dual__input" id="rangeMax" min="0" max="1000000" value="500000" step="10000" />
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <span class="filter-label">Minimum Equity</span>
+            <select class="input select input-filled placeholder" name="min-equity">
+              <option value="">Select minimum</option>
+              <option value="10">10%+</option>
+              <option value="20">20%+</option>
+              <option value="30">30%+</option>
+              <option value="40">40%+</option>
+              <option value="50">50%+</option>
+            </select>
+          </div>
+
+        </div>
+
+        <!-- Ownership -->
+        <div class="filter-group">
+          <span class="filter-label">Ownership</span>
+          <div class="checkbox-group inline">
+            <label class="checkbox-item">
+              <input type="checkbox" name="ownership" value="owner-occupied" />
+              Owner Occupied
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="ownership" value="investor-owned" />
+              Investor Owned
+            </label>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Action Bar — DS 26 -->
+  <footer class="action-bar">
+    <div class="action-bar__inner">
+      <p class="action-bar__hint" id="bottomHint">Select location, template, or filters to get started</p>
+      <button
+        class="btn btn-primary btn-md"
+        id="estimateBtn"
+        type="button"
+        disabled
+        onclick="startEstimate()"
+      >
+        <svg id="estimateIcon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <rect x="2" y="2" width="12" height="12" rx="2" stroke="white" stroke-width="1.5"/>
+          <path d="M5 6h6M5 9h4" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <svg id="estimateSpinner" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="display:none; animation:spin 0.7s linear infinite;">
+          <circle cx="8" cy="8" r="6" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+          <path d="M8 2a6 6 0 0 1 6 6" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span id="estimateLabel">Estimate Pull</span>
+      </button>
+    </div>
+  </footer>
+
+</div>
+
+<style>
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+<script src="js/app.js"></script>
+<script>
+initPage();
+function startEstimate() {
+  const btn = document.getElementById('estimateBtn');
+  btn.disabled = true;
+  document.getElementById('estimateIcon').style.display    = 'none';
+  document.getElementById('estimateSpinner').style.display = '';
+  document.getElementById('estimateLabel').textContent     = 'Estimating…';
+  setTimeout(() => { window.location.href = 'step2.html'; }, 1400);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BatchData — Settings · Users</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css?v=2" />
+  <script src="js/auth.js"></script>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Top Nav -->
+  <nav class="top-nav">
+    <div class="top-nav__inner">
+      <div class="top-nav__left">
+        <div class="top-nav__brand">
+          <span class="top-nav__logo">Batch<em>Data</em></span>
+        </div>
+        <div class="top-nav__links">
+          <a href="orders.html" class="top-nav__link">My Lists</a>
+          <a href="settings-token.html" class="top-nav__link">API Settings</a>
+          <a href="settings-users.html" class="top-nav__link top-nav__link--active">Users</a>
+          <a href="settings-corporate.html" class="top-nav__link">Corporate Settings</a>
+        </div>
+      </div>
+      <div class="top-nav__right">
+        <span class="top-nav__user-name">James Carter</span>
+        <a href="profile.html" class="top-nav__avatar" id="navAvatar" style="text-decoration:none;color:white;" title="Profile settings">JC</a>
+        <button class="top-nav__logout" onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Body -->
+  <div class="page-body">
+
+    <div class="page-header">
+      <div>
+        <h1 class="page-header__title">Settings</h1>
+        <p class="page-header__subtitle">Admin configuration for your BatchData account</p>
+      </div>
+    </div>
+
+    <div>
+        <div class="users-section">
+
+          <div class="users-section__header">
+            <h2 class="users-section__title">Team Members</h2>
+            <button class="btn btn-primary btn-sm" onclick="openInviteModal()">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+              Invite User
+            </button>
+          </div>
+
+          <!-- Status Tabs -->
+          <div class="users-tabs">
+            <button class="users-tab users-tab--active" onclick="switchUserTab('active', this)">Active <span style="background:var(--color-neutral-200); border-radius:99px; padding:1px 7px; font-size:11px; margin-left:4px">3</span></button>
+            <button class="users-tab" onclick="switchUserTab('invited', this)">Invited <span style="background:var(--color-neutral-200); border-radius:99px; padding:1px 7px; font-size:11px; margin-left:4px">1</span></button>
+            <button class="users-tab" onclick="switchUserTab('revoked', this)">Revoked <span style="background:var(--color-neutral-200); border-radius:99px; padding:1px 7px; font-size:11px; margin-left:4px">1</span></button>
+          </div>
+
+          <!-- Active Users -->
+          <div id="tab-active">
+            <table class="users-table">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Role</th>
+                  <th>Last Active</th>
+                  <th>Lists Pulled</th>
+                  <th style="text-align:right">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="user-cell">
+                      <div class="user-avatar ua--red">JC</div>
+                      <div>
+                        <div class="user-name">James Carter <span style="font-size:11px; background:var(--color-primary-50); color:var(--color-primary-600); padding:1px 6px; border-radius:99px; font-weight:600; margin-left:4px">You</span></div>
+                        <div class="user-email">james.carter@oril.co</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span style="font-size:13px; font-weight:500">Admin</span></td>
+                  <td style="color:var(--color-neutral-500)">Today</td>
+                  <td><strong>6</strong></td>
+                  <td style="text-align:right">
+                    <button class="btn btn-ghost btn-sm" disabled style="opacity:0.3; cursor:not-allowed">Revoke</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="user-cell">
+                      <div class="user-avatar ua--blue">SM</div>
+                      <div>
+                        <div class="user-name">Sarah Mitchell</div>
+                        <div class="user-email">sarah.mitchell@oril.co</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span style="font-size:13px; color:var(--color-neutral-500)">Member</span></td>
+                  <td style="color:var(--color-neutral-500)">Apr 15, 2026</td>
+                  <td><strong>12</strong></td>
+                  <td style="text-align:right">
+                    <button class="btn btn-ghost btn-sm" style="color:var(--color-error-500)" onclick="openRevokeModal('Sarah Mitchell')">Revoke</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="user-cell">
+                      <div class="user-avatar ua--green">RC</div>
+                      <div>
+                        <div class="user-name">Ryan Cooper</div>
+                        <div class="user-email">r.cooper@oril.co</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span style="font-size:13px; color:var(--color-neutral-500)">Member</span></td>
+                  <td style="color:var(--color-neutral-500)">Apr 13, 2026</td>
+                  <td><strong>4</strong></td>
+                  <td style="text-align:right">
+                    <button class="btn btn-ghost btn-sm" style="color:var(--color-error-500)" onclick="openRevokeModal('Ryan Cooper')">Revoke</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Invited Users (hidden by default) -->
+          <div id="tab-invited" style="display:none">
+            <table class="users-table">
+              <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Invited By</th>
+                  <th>Sent</th>
+                  <th>Status</th>
+                  <th style="text-align:right">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="user-cell">
+                      <div class="user-avatar ua--purple">ET</div>
+                      <div>
+                        <div class="user-name">Emily Torres</div>
+                        <div class="user-email">e.torres@oril.co</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td style="color:var(--color-neutral-500)">James Carter</td>
+                  <td style="color:var(--color-neutral-500)">Apr 15, 2026</td>
+                  <td><span class="badge badge--invited">Pending</span></td>
+                  <td style="text-align:right">
+                    <button class="btn btn-ghost btn-sm" onclick="showToast('Invite resent')">Resend</button>
+                    <button class="btn btn-ghost btn-sm" style="color:var(--color-error-500)" onclick="openRevokeModal('Emily Torres')">Cancel</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Revoked Users (hidden by default) -->
+          <div id="tab-revoked" style="display:none">
+            <table class="users-table">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Revoked By</th>
+                  <th>Date</th>
+                  <th>Lists Pulled</th>
+                  <th style="text-align:right">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="opacity:0.6">
+                  <td>
+                    <div class="user-cell">
+                      <div class="user-avatar ua--gray">JP</div>
+                      <div>
+                        <div class="user-name">Jake Patterson</div>
+                        <div class="user-email">j.patterson@company.com</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td style="color:var(--color-neutral-500)">James Carter</td>
+                  <td style="color:var(--color-neutral-500)">Mar 28, 2026</td>
+                  <td><strong>3</strong></td>
+                  <td style="text-align:right">
+                    <span class="badge badge--revoked">Revoked</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+    </div>
+  </div>
+</div>
+
+<!-- Invite User Modal (S-11) -->
+<div class="modal-backdrop" id="inviteModal">
+  <div class="modal modal--sm">
+    <div class="modal__header">
+      <div>
+        <h3 class="modal__title">Invite Team Member</h3>
+        <p class="modal__subtitle">They'll receive an email to set up their account.</p>
+      </div>
+      <button class="modal__close" onclick="closeInviteModal()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="modal__body">
+      <div>
+        <label class="form-label" for="inviteEmail">Work email address</label>
+        <input type="email" id="inviteEmail" class="input input-filled" placeholder="colleague@company.com" />
+      </div>
+      <div id="inviteSuccess" class="alert alert--success" style="display:none">
+        <svg class="alert__icon" viewBox="0 0 18 18" fill="none"><path d="M3 9.5l3.5 3.5L15 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+        <span>Invite sent successfully.</span>
+      </div>
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn-outline btn-md" onclick="closeInviteModal()">Cancel</button>
+      <button class="btn btn-primary btn-md" onclick="sendInvite()">Send Invite</button>
+    </div>
+  </div>
+</div>
+
+<!-- Revoke Confirmation Modal (S-12) -->
+<div class="modal-backdrop" id="revokeModal">
+  <div class="modal modal--sm">
+    <div class="modal__header">
+      <div>
+        <h3 class="modal__title" style="color:#991B1B">Revoke Access?</h3>
+        <p class="modal__subtitle" id="revokeSubtitle">This user will lose access immediately.</p>
+      </div>
+      <button class="modal__close" onclick="closeRevokeModal()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="modal__body">
+      <p style="font-size:14px; color:var(--color-neutral-600); line-height:1.5">
+        <strong id="revokeUserName"></strong> will be immediately logged out and blocked from pulling or downloading lists. Their past orders will remain in the system.
+      </p>
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn-outline btn-md" onclick="closeRevokeModal()">Cancel</button>
+      <button class="btn btn-danger btn-md" onclick="confirmRevoke()">Yes, Revoke Access</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" style="
+  position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px);
+  background:var(--color-neutral-900); color:white; padding:12px 20px;
+  border-radius:var(--radius-lg); font-size:13px; font-weight:500;
+  box-shadow:var(--shadow-lg); transition:transform 300ms ease; z-index:600;
+  display:flex; align-items:center; gap:8px; white-space:nowrap;
+">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3L13 4.5" stroke="#10B981" stroke-width="2" stroke-linecap="round"/></svg>
+  <span id="toastMsg">Done</span>
+</div>
+
+<script>
+initPage({ requireAdmin: true });
+// ── Tab switching ─────────────────────────────────────────────────────────
+function switchUserTab(tab, btn) {
+  ['active','invited','revoked'].forEach(t => {
+    document.getElementById('tab-' + t).style.display = t === tab ? '' : 'none';
+  });
+  document.querySelectorAll('.users-tab').forEach(b => b.classList.remove('users-tab--active'));
+  btn.classList.add('users-tab--active');
+}
+
+// ── Invite modal ─────────────────────────────────────────────────────────
+function openInviteModal() {
+  document.getElementById('inviteModal').classList.add('modal-backdrop--open');
+  document.getElementById('inviteSuccess').style.display = 'none';
+  document.getElementById('inviteEmail').value = '';
+}
+function closeInviteModal() {
+  document.getElementById('inviteModal').classList.remove('modal-backdrop--open');
+}
+function sendInvite() {
+  const email = document.getElementById('inviteEmail').value;
+  if (!email) return;
+  document.getElementById('inviteSuccess').style.display = 'flex';
+  setTimeout(closeInviteModal, 1500);
+}
+
+// ── Revoke modal ─────────────────────────────────────────────────────────
+function openRevokeModal(name) {
+  document.getElementById('revokeUserName').textContent = name;
+  document.getElementById('revokeModal').classList.add('modal-backdrop--open');
+}
+function closeRevokeModal() {
+  document.getElementById('revokeModal').classList.remove('modal-backdrop--open');
+}
+function confirmRevoke() {
+  closeRevokeModal();
+  showToast('Access revoked');
+}
+
+// ── Toast ─────────────────────────────────────────────────────────────────
+function showToast(msg) {
+  document.getElementById('toastMsg').textContent = msg;
+  const toast = document.getElementById('toast');
+  toast.style.transform = 'translateX(-50%) translateY(0)';
+  setTimeout(() => { toast.style.transform = 'translateX(-50%) translateY(80px)'; }, 3000);
+}
+</script>
+
+</body>
+</html>
