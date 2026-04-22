@@ -17,18 +17,15 @@
   <!-- Header -->
   <header class="app-header">
     <div class="app-header__inner">
-      <!-- Stepper — DS 22 -->
-      <nav class="stepper" aria-label="Progress">
-        <div class="stepper-step stepper-step--active" aria-current="step">
-          <span class="stepper-number">1</span>
-          <span class="stepper-label">Define Your Pull</span>
-        </div>
-        <div class="stepper-connector" aria-hidden="true"></div>
-        <div class="stepper-step stepper-step--inactive">
-          <span class="stepper-number">2</span>
-          <span class="stepper-label">Review &amp; Download</span>
-        </div>
-      </nav>
+      <div style="display:flex; align-items:center; gap:var(--space-4);">
+        <a href="orders.html" class="btn btn-outline btn-sm">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Back
+        </a>
+        <h1 style="font-size:var(--font-size-2xl); font-weight:var(--font-weight-semibold); color:var(--color-neutral-900);">Define Your Pull</h1>
+      </div>
 
       <!-- Close overlay -->
       <a href="orders.html" class="overlay-close" aria-label="Close and return to My Lists">
@@ -91,12 +88,11 @@
     </section>
 
     <!-- Filter Panel — DS 24 -->
+    <div class="section-header">
+      <h2>Custom Filters</h2>
+      <p>Refine your list criteria</p>
+    </div>
     <section class="filter-panel">
-      <div class="filter-panel__header">
-        <h3>Custom Filters</h3>
-        <p>Refine your list criteria</p>
-      </div>
-
       <div class="filter-panel__body">
 
         <!-- Location -->

@@ -40,15 +40,15 @@
         </div>
         <div class="top-nav__links">
           <a href="orders.html" class="top-nav__link top-nav__link--active">My Lists</a>
-          <a href="settings-token.html" class="top-nav__link nav-admin-only">API Settings</a>
           <a href="settings-users.html" class="top-nav__link nav-admin-only">Users</a>
-          <a href="settings-corporate.html" class="top-nav__link nav-admin-only">Corporate Settings</a>
         </div>
       </div>
       <div class="top-nav__right">
+        <a href="settings-corporate.html" class="top-nav__link nav-admin-only" style="font-size:var(--font-size-sm);">Corporate Settings</a>
+        <div style="width:1px; height:16px; background:rgba(255,255,255,0.2); flex-shrink:0;"></div>
         <span class="top-nav__user-name">James Carter</span>
         <a href="profile.html" class="top-nav__avatar" id="navAvatar" style="text-decoration:none;color:white;" title="Profile settings">JC</a>
-        <button class="top-nav__logout" onclick="logout()">Logout</button>
+        
       </div>
     </div>
   </nav>
@@ -74,13 +74,13 @@
     <div class="orders-wrap" id="ordersTable">
       <table class="orders-table" aria-label="Order history">
         <colgroup>
-          <col style="width:auto" />
+          <col style="width:260px" />
           <col style="width:110px" />
           <col style="width:90px" />
           <col style="width:90px" />
           <col style="width:100px" />
           <col style="width:130px" />
-          <col style="width:160px" />
+          <col style="width:130px" />
         </colgroup>
         <thead>
           <tr>
@@ -96,7 +96,7 @@
         <tbody>
 
           <!-- Row 1 — Processing (new, from sessionStorage) -->
-          <tr id="newOrderRow" style="display:none">
+          <tr id="newOrderRow" style="display:none; cursor:pointer" onclick="window.location.href='order-detail.html'">
             <td>
               <div class="order-name">Phoenix AZ Absentee Owners</div>
               <div class="order-meta">Phoenix, AZ · Single Family · 3+ Beds · $100k–$500k</div>
@@ -107,14 +107,17 @@
             <td><span class="badge badge--processing" id="newOrderBadge">Processing</span></td>
             <td><span class="order-tag">Q2 Campaign</span></td>
             <td>
-              <div class="order-actions" style="justify-content:flex-end">
-                <button class="btn btn-outline btn-sm" disabled style="opacity:0.4; cursor:not-allowed">Export CSV</button>
+              <div class="order-actions" style="justify-content:flex-end" onclick="event.stopPropagation()">
+                <button class="btn btn-outline btn-sm" disabled style="opacity:0.4; cursor:not-allowed">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2v8M5 7l3 3 3-3M3 12h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  Export CSV
+                </button>
               </div>
             </td>
           </tr>
 
-          <!-- Row 2 -->
-          <tr>
+          <!-- Row 2 — Ready -->
+          <tr style="cursor:pointer" onclick="window.location.href='order-detail.html'">
             <td>
               <div class="order-name">Scottsdale High Equity Single Family</div>
               <div class="order-meta">Scottsdale, AZ · Single Family · 50%+ Equity</div>
@@ -125,18 +128,17 @@
             <td><span class="badge badge--ready">Ready</span></td>
             <td><span class="order-tag">Solar Q2</span></td>
             <td>
-              <div class="order-actions" style="justify-content:flex-end">
+              <div class="order-actions" style="justify-content:flex-end" onclick="event.stopPropagation()">
                 <button class="btn btn-outline btn-sm" onclick="handleExport(this)">
                   <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2v8M5 7l3 3 3-3M3 12h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
                   Export CSV
                 </button>
-                <a href="order-detail.html" class="btn btn-ghost btn-sm">View</a>
               </div>
             </td>
           </tr>
 
-          <!-- Row 3 -->
-          <tr>
+          <!-- Row 3 — Ready -->
+          <tr style="cursor:pointer" onclick="window.location.href='order-detail.html'">
             <td>
               <div class="order-name">Mesa Active Listings</div>
               <div class="order-meta">Mesa, AZ · All Types · Active on market</div>
@@ -147,18 +149,17 @@
             <td><span class="badge badge--ready">Ready</span></td>
             <td><span class="order-tag">March Outreach</span></td>
             <td>
-              <div class="order-actions" style="justify-content:flex-end">
+              <div class="order-actions" style="justify-content:flex-end" onclick="event.stopPropagation()">
                 <button class="btn btn-outline btn-sm" onclick="handleExport(this)">
                   <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2v8M5 7l3 3 3-3M3 12h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
                   Export CSV
                 </button>
-                <a href="order-detail.html" class="btn btn-ghost btn-sm">View</a>
               </div>
             </td>
           </tr>
 
           <!-- Row 4 — Failed -->
-          <tr>
+          <tr style="cursor:pointer" onclick="window.location.href='order-detail.html'">
             <td>
               <div class="order-name">Tempe Multi-Family Investor Owned</div>
               <div class="order-meta">Tempe, AZ · Multi-Family · Investor Owned</div>
@@ -169,9 +170,11 @@
             <td><span class="badge badge--failed">Failed</span></td>
             <td><span class="order-tag">Test Run</span></td>
             <td>
-              <div class="order-actions" style="justify-content:flex-end">
-                <button class="btn btn-outline btn-sm" onclick="window.location.href='index.html'">Retry</button>
-                <a href="order-detail.html" class="btn btn-ghost btn-sm">View</a>
+              <div class="order-actions" style="justify-content:flex-end" onclick="event.stopPropagation()">
+                <button class="btn btn-outline btn-sm" onclick="window.location.href='index.html'">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 8a6 6 0 1 0 6-6 6 6 0 0 0-4.5 2L2 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 2v4h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Retry
+                </button>
               </div>
             </td>
           </tr>

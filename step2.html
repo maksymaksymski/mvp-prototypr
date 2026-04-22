@@ -17,18 +17,15 @@
   <!-- Header -->
   <header class="app-header">
     <div class="app-header__inner">
-      <!-- Stepper — DS 22 -->
-      <nav class="stepper" aria-label="Progress">
-        <div class="stepper-step stepper-step--inactive">
-          <span class="stepper-number">1</span>
-          <span class="stepper-label">Define Your Pull</span>
-        </div>
-        <div class="stepper-connector" aria-hidden="true"></div>
-        <div class="stepper-step stepper-step--active" aria-current="step">
-          <span class="stepper-number">2</span>
-          <span class="stepper-label">Review &amp; Download</span>
-        </div>
-      </nav>
+      <div style="display:flex; align-items:center; gap:var(--space-4);">
+        <a href="index.html" class="btn btn-outline btn-sm">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Back
+        </a>
+        <h1 style="font-size:var(--font-size-2xl); font-weight:var(--font-weight-semibold); color:var(--color-neutral-900);">Review &amp; Download</h1>
+      </div>
 
       <!-- Close overlay -->
       <a href="orders.html" class="overlay-close" aria-label="Close and return to My Lists">
@@ -41,74 +38,6 @@
 
   <!-- Main -->
   <main class="step2-main">
-
-    <!-- Sub header -->
-    <div class="sub-header">
-      <div class="sub-header-left">
-        <a href="index.html" class="btn btn-outline btn-sm">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          Edit Filters
-        </a>
-        <div class="sub-header-title">
-          <h2>Review Your List</h2>
-          <p>Review record count, apply suppression, and download</p>
-        </div>
-      </div>
-
-      <!-- Suppress Records button with active indicator -->
-      <div class="suppress-btn-wrap">
-        <button class="btn btn-outline btn-sm" type="button" id="suppressBtn" onclick="openDrawer()">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M2 4h12M4 8h8M7 12h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-          Suppress Records
-        </button>
-        <span class="suppress-active-dot" id="suppressDot"></span>
-      </div>
-    </div>
-
-    <!-- Count Bar — DS 27 -->
-    <div class="count-bar">
-      <div class="count-bar__stats">
-
-        <div class="count-bar__stat">
-          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-            <path d="M4 6h12M4 10h8M4 14h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-          <span><strong id="recordCount">7,651</strong> records found</span>
-        </div>
-
-        <div class="count-bar__divider" aria-hidden="true"></div>
-
-        <div class="count-bar__stat">
-          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-            <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/>
-            <path d="M10 6v1.5M10 12.5V14M7.5 8.5c0-1.1.9-2 2.5-2s2.5.9 2.5 2-1.12 2-2.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-          <span>Estimated cost: <strong id="costEstimate">$918.12</strong></span>
-        </div>
-
-        <!-- Suppression badge — shown when active -->
-        <div class="count-bar__divider" id="suppressDivider" aria-hidden="true" style="display:none"></div>
-        <div class="count-bar__stat" id="suppressStat" style="display:none">
-          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-            <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/>
-            <path d="M7 10h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-          <span style="color:var(--color-primary-600)"><strong id="suppressedCount">0</strong> suppressed</span>
-        </div>
-
-      </div>
-
-      <button class="btn btn-primary btn-md" type="button" id="downloadBtn" onclick="openPayment()">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path d="M8 2v8M5 7l3 3 3-3M3 12h10" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        Download List
-      </button>
-    </div>
 
     <!-- Data Preview — DS 28 -->
     <div class="data-preview">
@@ -213,6 +142,59 @@
     </div>
 
   </main>
+
+  <!-- Footer action bar -->
+  <footer class="action-bar">
+    <div class="action-bar__inner">
+      <div style="display:flex; align-items:center; gap:var(--space-5);">
+
+        <div class="count-bar__stat">
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M4 6h12M4 10h8M4 14h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span><strong id="recordCount">7,651</strong> records found</span>
+        </div>
+
+        <div class="count-bar__divider"></div>
+
+        <div class="count-bar__stat">
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M10 6v1.5M10 12.5V14M7.5 8.5c0-1.1.9-2 2.5-2s2.5.9 2.5 2-1.12 2-2.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span>Estimated cost: <strong id="costEstimate">$918.12</strong></span>
+        </div>
+
+        <div class="count-bar__divider" id="suppressDivider" style="display:none"></div>
+        <div class="count-bar__stat" id="suppressStat" style="display:none">
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M7 10h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span style="color:var(--color-primary-600)"><strong id="suppressedCount">0</strong> suppressed</span>
+        </div>
+
+      </div>
+      <div style="display:flex; align-items:center; gap:var(--space-3);">
+        <div class="suppress-btn-wrap">
+          <button class="btn btn-outline btn-md" type="button" id="suppressBtn" onclick="openDrawer()">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M2 4h12M4 8h8M7 12h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            Suppress Records
+          </button>
+          <span class="suppress-active-dot" id="suppressDot"></span>
+        </div>
+        <button class="btn btn-primary btn-md" type="button" id="downloadBtn" onclick="openPayment()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M8 2v8M5 7l3 3 3-3M3 12h10" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Download List
+        </button>
+      </div>
+    </div>
+  </footer>
+
 </div>
 
 <!-- ===================================================

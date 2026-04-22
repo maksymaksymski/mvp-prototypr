@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PropData — Brand Color</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css?v=2" />
+  <script src="js/auth.js"></script>
+</head>
+<body>
+
+<div class="app">
+
+  <header class="app-header">
+    <div class="app-header__inner">
+      <div style="display:flex; align-items:center; gap:var(--space-3);">
+        <a href="settings-corporate.html" style="display:flex; align-items:center; padding:4px; color:var(--color-neutral-600); text-decoration:none; border-radius:var(--radius-md); transition:background 150ms ease;" onmouseover="this.style.background='var(--color-neutral-100)'" onmouseout="this.style.background='none'">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+            <path d="M14 17L8 11l6-6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <h1 style="font-size:var(--font-size-xl); font-weight:var(--font-weight-semibold); color:var(--color-neutral-900);">Brand Color</h1>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-main" style="background:var(--color-neutral-50);">
+    <div style="max-width:640px; margin:0; padding:var(--space-8) var(--space-6); display:flex; flex-direction:column; gap:var(--space-4);">
+
+      <div class="settings-section">
+        <div class="settings-section__header">
+          <h2 class="settings-section__title">Brand Color</h2>
+          <p class="settings-section__desc">Sets the primary color for buttons, active states, and highlights across the platform.</p>
+        </div>
+        <div class="settings-section__body">
+
+          <div style="display:flex; align-items:flex-start; gap:var(--space-6);">
+            <div style="flex:1;">
+              <label class="form-label">Primary color</label>
+              <div style="display:flex; align-items:center; gap:var(--space-3);">
+                <input type="color" id="brandColor" value="#E84B35"
+                  oninput="updateColorPreview(this.value)"
+                  style="width:48px; height:40px; padding:2px; border:1.5px solid var(--color-neutral-300); border-radius:var(--radius-md); cursor:pointer; background:white;" />
+                <input type="text" id="brandColorHex" class="input input-filled"
+                  value="#E84B35" maxlength="7" placeholder="#000000"
+                  oninput="syncColorFromHex(this.value)"
+                  style="width:120px; font-family:monospace; font-size:13px;" />
+              </div>
+              <p style="font-size:12px; color:var(--color-neutral-400); margin-top:6px;">Affects buttons, selected states, links, and progress indicators.</p>
+            </div>
+
+            <div style="flex-shrink:0;">
+              <p style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--color-neutral-400); margin-bottom:var(--space-2);">Preview</p>
+              <div style="display:flex; flex-direction:column; gap:var(--space-2); width:180px;">
+                <button id="colorPreviewBtn" class="btn btn-md" style="background:var(--color-primary-500); color:white; width:100%;">Download List</button>
+                <div style="display:flex; align-items:center; gap:8px; padding:8px 12px; background:var(--color-primary-50); border:1px solid var(--color-primary-200); border-radius:var(--radius-lg);">
+                  <div id="colorPreviewDot" style="width:10px; height:10px; border-radius:50%; background:var(--color-primary-500); flex-shrink:0;"></div>
+                  <span style="font-size:12px; color:var(--color-primary-700); font-weight:500;">Active state</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <p style="font-size:12px; font-weight:500; color:var(--color-neutral-500); margin-bottom:var(--space-2);">Presets</p>
+            <div style="display:flex; gap:var(--space-2);">
+              <button onclick="setColor('#E84B35')" title="PropData Red" style="width:28px; height:28px; background:#E84B35; border-radius:var(--radius-md); border:2px solid transparent; cursor:pointer; transition:transform 150ms ease;" onmouseover="this.style.transform='scale(1.15)'" onmouseout="this.style.transform='scale(1)'"></button>
+              <button onclick="setColor('#2563EB')" title="Blue" style="width:28px; height:28px; background:#2563EB; border-radius:var(--radius-md); border:2px solid transparent; cursor:pointer; transition:transform 150ms ease;" onmouseover="this.style.transform='scale(1.15)'" onmouseout="this.style.transform='scale(1)'"></button>
+              <button onclick="setColor('#059669')" title="Green" style="width:28px; height:28px; background:#059669; border-radius:var(--radius-md); border:2px solid transparent; cursor:pointer; transition:transform 150ms ease;" onmouseover="this.style.transform='scale(1.15)'" onmouseout="this.style.transform='scale(1)'"></button>
+              <button onclick="setColor('#7C3AED')" title="Purple" style="width:28px; height:28px; background:#7C3AED; border-radius:var(--radius-md); border:2px solid transparent; cursor:pointer; transition:transform 150ms ease;" onmouseover="this.style.transform='scale(1.15)'" onmouseout="this.style.transform='scale(1)'"></button>
+              <button onclick="setColor('#D97706')" title="Amber" style="width:28px; height:28px; background:#D97706; border-radius:var(--radius-md); border:2px solid transparent; cursor:pointer; transition:transform 150ms ease;" onmouseover="this.style.transform='scale(1.15)'" onmouseout="this.style.transform='scale(1)'"></button>
+              <button onclick="setColor('#111827')" title="Dark" style="width:28px; height:28px; background:#111827; border-radius:var(--radius-md); border:2px solid transparent; cursor:pointer; transition:transform 150ms ease;" onmouseover="this.style.transform='scale(1.15)'" onmouseout="this.style.transform='scale(1)'"></button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="action-bar">
+    <div class="action-bar__inner">
+      <p class="action-bar__hint"></p>
+      <div style="display:flex; gap:var(--space-3);">
+        <button class="btn btn-outline btn-md" onclick="window.location.reload()">Discard changes</button>
+        <button class="btn btn-primary btn-md" onclick="saveSettings()">Save changes</button>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<div id="toast" style="
+  position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px);
+  background:var(--color-neutral-900); color:white; padding:12px 20px;
+  border-radius:var(--radius-lg); font-size:13px; font-weight:500;
+  box-shadow:var(--shadow-lg); transition:transform 300ms ease; z-index:600;
+  display:flex; align-items:center; gap:8px; white-space:nowrap;
+">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3L13 4.5" stroke="#10B981" stroke-width="2" stroke-linecap="round"/></svg>
+  Brand color saved
+</div>
+
+<script>
+initPage({ requireAdmin: true });
+
+function updateColorPreview(hex) {
+  document.getElementById('brandColorHex').value = hex.toUpperCase();
+  document.getElementById('colorPreviewBtn').style.background = hex;
+  document.getElementById('colorPreviewDot').style.background = hex;
+}
+function syncColorFromHex(val) {
+  if (/^#[0-9A-Fa-f]{6}$/.test(val)) {
+    document.getElementById('brandColor').value = val;
+    updateColorPreview(val);
+  }
+}
+function setColor(hex) {
+  document.getElementById('brandColor').value = hex;
+  updateColorPreview(hex);
+}
+function saveSettings() {
+  const toast = document.getElementById('toast');
+  toast.style.transform = 'translateX(-50%) translateY(0)';
+  setTimeout(() => { toast.style.transform = 'translateX(-50%) translateY(80px)'; }, 3000);
+}
+</script>
+
+</body>
+</html>

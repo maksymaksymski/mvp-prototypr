@@ -23,13 +23,14 @@
           <a href="orders.html" class="top-nav__link">My Lists</a>
           <a href="settings-token.html" class="top-nav__link top-nav__link--active">API Settings</a>
           <a href="settings-users.html" class="top-nav__link">Users</a>
-          <a href="settings-corporate.html" class="top-nav__link">Corporate Settings</a>
         </div>
       </div>
       <div class="top-nav__right">
+        <a href="settings-corporate.html" class="top-nav__link nav-admin-only" style="font-size:var(--font-size-sm);">Corporate Settings</a>
+        <div style="width:1px; height:16px; background:rgba(255,255,255,0.2); flex-shrink:0;"></div>
         <span class="top-nav__user-name">James Carter</span>
         <a href="profile.html" class="top-nav__avatar" id="navAvatar" style="text-decoration:none;color:white;" title="Profile settings">JC</a>
-        <button class="top-nav__logout" onclick="logout()">Logout</button>
+        
       </div>
     </div>
   </nav>
@@ -39,8 +40,8 @@
 
     <div class="page-header">
       <div>
-        <h1 class="page-header__title">Settings</h1>
-        <p class="page-header__subtitle">Admin configuration for your PropData account</p>
+        <h1 class="page-header__title">API Settings</h1>
+        <p class="page-header__subtitle">Manage your API token and integrations</p>
       </div>
     </div>
 

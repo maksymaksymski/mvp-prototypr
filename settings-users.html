@@ -21,15 +21,15 @@
         </div>
         <div class="top-nav__links">
           <a href="orders.html" class="top-nav__link">My Lists</a>
-          <a href="settings-token.html" class="top-nav__link">API Settings</a>
           <a href="settings-users.html" class="top-nav__link top-nav__link--active">Users</a>
-          <a href="settings-corporate.html" class="top-nav__link">Corporate Settings</a>
         </div>
       </div>
       <div class="top-nav__right">
+        <a href="settings-corporate.html" class="top-nav__link nav-admin-only" style="font-size:var(--font-size-sm);">Corporate Settings</a>
+        <div style="width:1px; height:16px; background:rgba(255,255,255,0.2); flex-shrink:0;"></div>
         <span class="top-nav__user-name">James Carter</span>
         <a href="profile.html" class="top-nav__avatar" id="navAvatar" style="text-decoration:none;color:white;" title="Profile settings">JC</a>
-        <button class="top-nav__logout" onclick="logout()">Logout</button>
+        
       </div>
     </div>
   </nav>
@@ -39,8 +39,8 @@
 
     <div class="page-header">
       <div>
-        <h1 class="page-header__title">Settings</h1>
-        <p class="page-header__subtitle">Admin configuration for your PropData account</p>
+        <h1 class="page-header__title">Users</h1>
+        <p class="page-header__subtitle">Manage team members and their access</p>
       </div>
     </div>
 
@@ -174,7 +174,6 @@
                   <th>Revoked By</th>
                   <th>Date</th>
                   <th>Lists Pulled</th>
-                  <th style="text-align:right">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -190,9 +189,14 @@
                   </td>
                   <td style="color:var(--color-neutral-500)">James Carter</td>
                   <td style="color:var(--color-neutral-500)">Mar 28, 2026</td>
-                  <td><strong>3</strong></td>
-                  <td style="text-align:right">
-                    <span class="badge badge--revoked">Revoked</span>
+                  <td>
+                    <div style="display:flex; align-items:center; justify-content:space-between;">
+                      <strong>3</strong>
+                      <button class="btn btn-outline btn-sm" onclick="reactivateUser(this)">
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 8a6 6 0 1 0 6-6 6 6 0 0 0-4.5 2L2 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 2v4h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Reactivate access
+                      </button>
+                    </div>
                   </td>
                 </tr>
               </tbody>
@@ -229,6 +233,30 @@
     <div class="modal__footer">
       <button class="btn btn-outline btn-md" onclick="closeInviteModal()">Cancel</button>
       <button class="btn btn-primary btn-md" onclick="sendInvite()">Send Invite</button>
+    </div>
+  </div>
+</div>
+
+<!-- Reactivate Confirmation Modal -->
+<div class="modal-backdrop" id="reactivateModal">
+  <div class="modal modal--sm">
+    <div class="modal__header">
+      <div>
+        <h3 class="modal__title">Reactivate Access?</h3>
+        <p class="modal__subtitle">This user will regain full access to the platform.</p>
+      </div>
+      <button class="modal__close" onclick="closeReactivateModal()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="modal__body">
+      <p style="font-size:14px; color:var(--color-neutral-600); line-height:1.5">
+        <strong id="reactivateName"></strong> will be able to log in and pull lists again immediately.
+      </p>
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn-outline btn-md" onclick="closeReactivateModal()">Cancel</button>
+      <button class="btn btn-primary btn-md" onclick="confirmReactivate()">Yes, Reactivate</button>
     </div>
   </div>
 </div>
@@ -307,6 +335,33 @@ function closeRevokeModal() {
 function confirmRevoke() {
   closeRevokeModal();
   showToast('Access revoked');
+}
+
+// ── Reactivate ────────────────────────────────────────────────────────────
+let _reactivateBtn = null;
+
+function reactivateUser(btn) {
+  _reactivateBtn = btn;
+  const name = btn.closest('tr').querySelector('.user-name').textContent.trim();
+  document.getElementById('reactivateName').textContent = name;
+  document.getElementById('reactivateModal').classList.add('modal-backdrop--open');
+}
+
+function closeReactivateModal() {
+  document.getElementById('reactivateModal').classList.remove('modal-backdrop--open');
+}
+
+function confirmReactivate() {
+  closeReactivateModal();
+  if (!_reactivateBtn) return;
+  const row = _reactivateBtn.closest('tr');
+  row.style.opacity = '1';
+  _reactivateBtn.disabled = true;
+  _reactivateBtn.innerHTML = 'Access restored';
+  _reactivateBtn.style.color = 'var(--color-success-700)';
+  _reactivateBtn.style.borderColor = 'var(--color-success-700)';
+  showToast('Access reactivated');
+  _reactivateBtn = null;
 }
 
 // ── Toast ─────────────────────────────────────────────────────────────────
