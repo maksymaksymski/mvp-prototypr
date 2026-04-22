@@ -1110,7 +1110,7 @@ svg { display: block; flex-shrink: 0; }
   font-size: var(--font-size-sm); color: var(--color-neutral-700);
   border-bottom: 1px solid var(--color-neutral-100); vertical-align: middle;
 }
-.orders-table tbody tr:last-child td { border-bottom: none; }
+.orders-table tbody tr:last-child td { border-bottom: 1px solid var(--color-neutral-100); }
 .orders-table tbody tr { transition: background var(--transition-base); }
 .orders-table tbody tr:hover { background: var(--color-neutral-50); }
 
@@ -1154,7 +1154,7 @@ svg { display: block; flex-shrink: 0; }
   border-radius: var(--radius-xl); box-shadow: var(--shadow-xs); overflow: hidden;
 }
 .detail-section__header {
-  padding: var(--space-4) var(--space-6); border-bottom: 1px solid var(--color-neutral-100);
+  padding: var(--space-4) var(--space-6); border-bottom: 1px solid var(--color-neutral-200);
   background: var(--color-neutral-50);
 }
 .detail-section__title { font-size: var(--font-size-base); font-weight: var(--font-weight-semibold); color: var(--color-neutral-800); }
@@ -1165,7 +1165,7 @@ svg { display: block; flex-shrink: 0; }
   padding: var(--space-3) var(--space-6);
   border-bottom: 1px solid var(--color-neutral-100);
 }
-.criteria-row:last-child { border-bottom: none; }
+.criteria-row:last-child { border-bottom: 1px solid var(--color-neutral-100); }
 .criteria-row__key {
   width: 160px; flex-shrink: 0;
   font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold);
