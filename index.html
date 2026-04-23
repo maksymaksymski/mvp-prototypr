@@ -87,110 +87,12 @@
       </div>
     </section>
 
-    <!-- Filter Panel — DS 24 -->
+    <!-- Filter Builder — DS 24 -->
     <div class="section-header">
       <h2>Custom Filters</h2>
       <p>Refine your list criteria</p>
     </div>
-    <section class="filter-panel">
-      <div class="filter-panel__body">
-
-        <!-- Location -->
-        <div class="filter-group">
-          <span class="filter-label">Location</span>
-          <div class="input-wrap">
-            <svg class="input-icon-left" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-              <circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M13.5 13.5L17 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-            <input
-              type="text"
-              class="input input-filled input-lg input-with-icon-left"
-              placeholder="Enter zip code, county, state, or address..."
-              autocomplete="off"
-            />
-          </div>
-        </div>
-
-        <!-- Property Type + Bedrooms -->
-        <div class="filter-row">
-
-          <div class="filter-group">
-            <span class="filter-label">Property Type</span>
-            <div class="checkbox-group">
-              <label class="checkbox-item">
-                <input type="checkbox" name="property-type" value="single-family" />
-                Single Family
-              </label>
-              <label class="checkbox-item">
-                <input type="checkbox" name="property-type" value="multi-family" />
-                Multi-Family
-              </label>
-              <label class="checkbox-item">
-                <input type="checkbox" name="property-type" value="condo-townhouse" />
-                Condo/Townhouse
-              </label>
-            </div>
-          </div>
-
-          <div class="filter-group">
-            <span class="filter-label">Bedrooms</span>
-            <select class="input select input-filled placeholder" name="bedrooms">
-              <option value="any">Any</option>
-              <option value="1">1+</option>
-              <option value="2">2+</option>
-              <option value="3">3+</option>
-              <option value="4">4+</option>
-              <option value="5">5+</option>
-            </select>
-          </div>
-
-        </div>
-
-        <!-- Price Range + Minimum Equity — DS 25 -->
-        <div class="filter-row">
-
-          <div class="filter-group">
-            <span class="filter-label" id="rangeLabel">Price Range: $100,000 – $500,000</span>
-            <div class="range-dual">
-              <div class="range-dual__track"></div>
-              <div class="range-dual__fill" id="rangeFill"></div>
-              <input type="range" class="range-dual__input" id="rangeMin" min="0" max="1000000" value="100000" step="10000" />
-              <input type="range" class="range-dual__input" id="rangeMax" min="0" max="1000000" value="500000" step="10000" />
-            </div>
-          </div>
-
-          <div class="filter-group">
-            <span class="filter-label">Minimum Equity</span>
-            <select class="input select input-filled placeholder" name="min-equity">
-              <option value="">Select minimum</option>
-              <option value="10">10%+</option>
-              <option value="20">20%+</option>
-              <option value="30">30%+</option>
-              <option value="40">40%+</option>
-              <option value="50">50%+</option>
-            </select>
-          </div>
-
-        </div>
-
-        <!-- Ownership -->
-        <div class="filter-group">
-          <span class="filter-label">Ownership</span>
-          <div class="checkbox-group inline">
-            <label class="checkbox-item">
-              <input type="checkbox" name="ownership" value="owner-occupied" />
-              Owner Occupied
-            </label>
-            <label class="checkbox-item">
-              <input type="checkbox" name="ownership" value="investor-owned" />
-              Investor Owned
-            </label>
-          </div>
-        </div>
-
-      </div>
-    </section>
+    <div id="filterBuilderMount"></div>
 
   </main>
 
@@ -223,6 +125,7 @@
 <style>
 @keyframes spin { to { transform: rotate(360deg); } }
 </style>
+<script src="js/filter-builder.js"></script>
 <script src="js/app.js"></script>
 <script>
 initPage();
